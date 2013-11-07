@@ -9,23 +9,31 @@ class BankerRound
   end
 
   def round
+    "#{rounded_whole_portion}.#{rounded_decimal_portion}".to_f 
+  end
+
+  def rounded_whole_portion
+    rounded_digits.to_i/@significance
+  end
+
+  def rounded_decimal_portion
+    rounded_digits.to_s[rounded_whole_portion.to_s.length..rounded_digits.to_s.length-1]
+  end
+
+  def rounded_digits
     if(last_digit_is_5 and second_to_last_digit_is_odd) or (last_digit_is_greater_than_5)
-      rounded_up_number
+      rounded_up_digits
     else
-      unrounded_number
+      untouched_digits
     end
   end
 
-  def rounded_up_number
-    "#{whole_number_portion}.#{third_to_last_digit}#{second_to_last_digit.to_i+1}".to_f
+  def untouched_digits
+    significant_digits.to_s[0..significant_digits.to_s.length-2]
   end
 
-  def unrounded_number
-    "#{whole_number_portion}.#{third_to_last_digit}#{second_to_last_digit}".to_f
-  end
-
-  def whole_number_portion
-    significant_digits.to_i/(@significance*10)
+  def rounded_up_digits
+    "#{significant_digits.to_s[0..significant_digits.to_s.length-3]}#{second_to_last_digit.to_i+1}"
   end
 
   def last_digit_is_5
@@ -50,10 +58,6 @@ class BankerRound
 
   def second_to_last_digit
     n_to_last_digit(2)
-  end
-
-  def third_to_last_digit
-    n_to_last_digit(3)
   end
 
   def n_to_last_digit(n)

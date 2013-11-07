@@ -39,4 +39,20 @@ class BakerRoundText < Test::Unit::TestCase
     br = BankerRound.new(2.335324)
     assert_equal(2.34, br.round)
   end
+
+  test "it should find the second to last digit" do
+    br = BankerRound.new(23.5) #23500
+    assert_equal('0', br.second_to_last_digit)
+  end
+
+
+  test "it should not round a number with only one decimal" do
+    br = BankerRound.new(23.5)
+    assert_equal(23.5, br.round)
+  end
+
+  test "it should not round a number with no decimals" do
+    br = BankerRound.new(23)
+    assert_equal(23.0, br.round)
+  end
 end
