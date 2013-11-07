@@ -2,6 +2,7 @@ require_relative 'currency_converter'
 require 'csv'
 
 class Report
+
   def initialize(params={:transaction_data => 'stream of csv data', :conversion_table => 'steam of xml data'})
     @data = params[:transaction_data]
     @currency_converter = CurrencyConverter.new(params[:conversion_table])
@@ -12,13 +13,14 @@ class Report
   end
 
   class Transaction
+    attr_reader :currency_converter
     def initialize(row, currency_converter)
       @row = row
       @currency_converter = currency_converter
     end
 
-    def for_sku?(sku)
-      @row['sku'] == sku
+    def for_sku?(the_sku)
+      @row['sku'] == the_sku
     end
 
     def amount
@@ -33,10 +35,20 @@ class Report
       @currency_converter.convert({:from => currency, :to => to_currency, :amount => amount}) 
     end
 
+    def sku
+      @row['sku']
+    end
+
   end
 
   def total_for(sku, currency='USD')
-    transactions.inject(0.00) {|sum, transaction| sum + (transaction.for_sku?(sku) ? transaction.amount_in(currency) : 0.00)}
+    BankerRound.round(transactions.inject(0.00) {|sum, transaction| sum + (transaction.for_sku?(sku) ? transaction.amount_in(currency) : 0.00)})
+  end
+
+  def report_for(sku, currency='USD')
+    transactions.select do |trans|
+      trans.for_sku?(sku)
+    end.map {|t| [t.sku, t.amount_in('USD')]}.inspect
   end
 
 end

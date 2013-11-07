@@ -19,11 +19,11 @@ end
 class ReportTest::TransactionTest < Test::Unit::TestCase
 
   setup do
-    @trans = Report::Transaction.new({'sku' => 'DM1182', 'amount' => '58.58 AUD'}, CurrencyConverter.new(File.read("test/conversion_table.xml")))
+    @trans = Report::Transaction.new({'sku' => 'DM1182', 'amount' => '19.68 AUD'}, CurrencyConverter.new(File.read("test/conversion_table.xml")))
   end
 
   test "a transaction amount should have only the numeric portion of the amount key" do
-    assert_equal(58.58, @trans.amount)
+    assert_equal(19.68, @trans.amount)
   end
 
   test "a transaction should have a currency" do
@@ -31,7 +31,7 @@ class ReportTest::TransactionTest < Test::Unit::TestCase
   end
 
   test "a transaction should return an amount converted to the currency requested" do
-    assert_equal(59.58, @trans.amount_in('USD'))
+    assert_equal(20.01, @trans.amount_in('USD'))
   end
 
 end

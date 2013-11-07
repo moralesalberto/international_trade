@@ -65,7 +65,7 @@ class BankerRound
   end
 
   def significant_digits
-    @significant_digits ||= (@number * @significance * 10).round # or truncate? need to check
+    @significant_digits ||= (@number * @significance * 10).truncate # it was truncate not round
   end
 
 end
