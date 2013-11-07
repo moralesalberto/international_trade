@@ -35,7 +35,7 @@ class BakerRoundText < Test::Unit::TestCase
     assert_equal(2.34, br.round)
   end
 
-  test "if the last number is 5 and the second to last number is odd then it should return the number unrounded" do
+  test "if the last number is 5 and the second to last number is odd then it should return the number rounded up one" do
     br = BankerRound.new(2.335324)
     assert_equal(2.34, br.round)
   end
