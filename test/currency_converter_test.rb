@@ -13,7 +13,7 @@ class CurrencyConverterTest < Test::Unit::TestCase
   end
 
   test "the converter should have a table of conversions with rates" do
-    assert_equal(5, @currency_converter.rates.size)
+    assert_equal(4, @currency_converter.rates.size)
   end
 
   test "given a from currency and a to currency it should give us the rate" do
@@ -22,5 +22,21 @@ class CurrencyConverterTest < Test::Unit::TestCase
 
   test "given a from currency, a to currency and an amount, it should return the converted amount" do
     assert_equal(34.69, @currency_converter.convert(:from => 'USD', :to => 'CAD', :amount => 35.00))
+  end
+
+  test "if the currency from and to are the same, it should just return the same number" do
+    assert_equal(35.0, @currency_converter.convert(:from => 'USD', :to => 'USD', :amount => 35.00))
+  end
+end
+
+class CurrencyConverterTest::RateCalculatorTest < Test::Unit::TestCase
+
+
+  test "must find all the rates from source currency to desired currency" do
+    rates = [{'from' => 'CAD', 'to' => 'GBP', 'conversion' => '0.9960'},
+             {'from' => 'AUD', 'to' => 'CAD', 'conversion' => '1.0090'},
+             {'from' => 'GBP', 'to' => 'USD', 'conversion' => '0.9230'},
+             {'from' => 'GBP', 'to' => 'SGD', 'conversion' => '0.8230'},
+             ]
   end
 end

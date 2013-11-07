@@ -16,11 +16,6 @@
     <conversion>0.9911</conversion>
   </rate>
   <rate>
-    <from>USD</from>
-    <to>USD</to>
-    <conversion>1.0000</conversion>
-  </rate>
-  <rate>
     <from>AUD</from>
     <to>USD</to>
     <conversion>1.0170</conversion>
