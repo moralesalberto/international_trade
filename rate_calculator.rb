@@ -1,4 +1,3 @@
-require 'debugger'
 require_relative 'banker_round'
 
 class RateCalculator

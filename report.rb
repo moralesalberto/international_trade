@@ -8,6 +8,10 @@ class Report
     @currency_converter = CurrencyConverter.new(params[:conversion_table])
   end
 
+  def total_for(sku, currency='USD')
+    BankerRound.new(transactions.inject(0.00) {|sum, transaction| sum + (transaction.for_sku?(sku) ? transaction.amount_in(currency) : 0.00)}).round
+  end
+
   def transactions
     CSV.parse(@data, :headers => true).map {|row| Transaction.new(row, @currency_converter)} 
   end
@@ -39,16 +43,6 @@ class Report
       @row['sku']
     end
 
-  end
-
-  def total_for(sku, currency='USD')
-    BankerRound.new(transactions.inject(0.00) {|sum, transaction| sum + (transaction.for_sku?(sku) ? transaction.amount_in(currency) : 0.00)}).round
-  end
-
-  def report_for(sku, currency='USD')
-    transactions.select do |trans|
-      trans.for_sku?(sku)
-    end.map {|t| [t.sku, t.amount_in('USD')]}.inspect
   end
 
 end
