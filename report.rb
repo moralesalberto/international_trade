@@ -3,7 +3,7 @@ require 'csv'
 
 class Report
 
-  def initialize(params={:transaction_data => 'stream of csv data', :conversion_table => 'steam of xml data'})
+  def initialize(params={:transaction_data => 'stream of csv data', :conversion_table => 'stream of xml data'})
     @data = params[:transaction_data]
     @currency_converter = CurrencyConverter.new(params[:conversion_table])
   end
