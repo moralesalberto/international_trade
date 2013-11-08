@@ -1,6 +1,5 @@
 class BankerRound
 
-
   def initialize(number, precision=2)
     @number = number
     @significance = 10**precision

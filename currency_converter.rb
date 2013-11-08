@@ -33,12 +33,12 @@ class CurrencyConverter
     same_currency(params) ? 1.0 : calculate_rate(params)
   end
 
-  def rate_calculator
-    @rate_calculator ||= RateCalculator.new(rates)
-  end
-  
   def calculate_rate(params)
     rate_calculator.rate(params)
+  end
+
+  def rate_calculator
+    @rate_calculator ||= RateCalculator.new(rates)
   end
 
   def convert(params={:from => 'CAD', :to => 'USD', :amount => 100.02})
