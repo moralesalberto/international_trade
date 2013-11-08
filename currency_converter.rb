@@ -1,5 +1,6 @@
 require 'active_support/all'
-require_relative 'banker_round.rb'
+require_relative 'banker_round'
+require_relative 'rate_calculator'
 
 class CurrencyConverter
 
@@ -8,11 +9,11 @@ class CurrencyConverter
   end
 
   def hash
-    @hash ||= Hash.from_xml(@xml)
+    @hash ||= Hash.from_xml(@xml).with_indifferent_access
   end
 
   def rates
-    hash['rates']['rate']
+    hash[:rates][:rate].map {|hash| hash.with_indifferent_access}
   end
 
   def rate(params= {:from => 'CAD', :to => 'USD'})
@@ -24,20 +25,24 @@ class CurrencyConverter
   end
 
   def find_rate(params)
-    rate = rates.find {|r| r['from'] == params[:from] and r['to'] == params[:to]}
-    rate['conversion'] if rate
+    rate = rates.find {|r| r[:from] == params[:from] and r[:to] == params[:to]}
+    rate[:conversion] if rate
   end
 
   def derive_rate(params)
     same_currency(params) ? 1.0 : calculate_rate(params)
   end
+
+  def rate_calculator
+    @rate_calculator ||= RateCalculator.new(rates)
+  end
   
   def calculate_rate(params)
-    raise "Work in progress will call RateCalculator.rate() eventually"
+    rate_calculator.rate(params)
   end
 
   def convert(params={:from => 'CAD', :to => 'USD', :amount => 100.02})
-    rate(params) ? BankerRound.round(converted_amount(params)) : nil 
+    rate(params) ? BankerRound.new(converted_amount(params)).round : nil 
   end
 
   def converted_amount(params={:from => 'CAD', :to => 'USD', :amount => 100.02})

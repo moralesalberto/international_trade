@@ -55,4 +55,25 @@ class BakerRoundText < Test::Unit::TestCase
     br = BankerRound.new(23)
     assert_equal(23.0, br.round)
   end
+
+  test "it should be able to take more decimal precision" do
+    br = BankerRound.new(25.1223456, 4)
+    assert_equal(25.1223, br.round)
+  end
+
+  test "it should be able to work with long decimals" do
+    br = BankerRound.new(0.90675456, 4)
+    assert_equal(90675, br.significant_digits)
+  end
+
+  test "it should be able to round with long decimals" do
+    br = BankerRound.new(0.5876638, 4)
+    assert_equal(0.5877, br.round)
+  end
+
+  test "it can round even long decimals correctly" do
+    br = BankerRound.new(0.945844886099999, 4)
+    assert_equal(0.9458, br.round)
+  end
+
 end

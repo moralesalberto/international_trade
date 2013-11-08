@@ -12,8 +12,7 @@ class ReportTest < Test::Unit::TestCase
   end
 
   test "report should report total of 134.22 for DM1182" do
-    # it says it should be 134.22 but Excel also gets 134.23, so I declare victory
-    assert_equal(134.23, @report.total_for('DM1182'))
+    assert_equal(134.22, @report.total_for('DM1182'))
   end
 end
 

@@ -13,7 +13,11 @@ class CurrencyConverterTest < Test::Unit::TestCase
   end
 
   test "the converter should have a table of conversions with rates" do
-    assert_equal(4, @currency_converter.rates.size)
+    assert_equal(3, @currency_converter.rates.size)
+  end
+
+  test "can get to the rates with symbols" do
+    assert_equal('AUD', @currency_converter.rates.first[:from])
   end
 
   test "given a from currency and a to currency it should give us the rate" do

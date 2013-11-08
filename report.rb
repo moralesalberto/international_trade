@@ -42,7 +42,7 @@ class Report
   end
 
   def total_for(sku, currency='USD')
-    BankerRound.round(transactions.inject(0.00) {|sum, transaction| sum + (transaction.for_sku?(sku) ? transaction.amount_in(currency) : 0.00)})
+    BankerRound.new(transactions.inject(0.00) {|sum, transaction| sum + (transaction.for_sku?(sku) ? transaction.amount_in(currency) : 0.00)}).round
   end
 
   def report_for(sku, currency='USD')

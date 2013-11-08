@@ -15,10 +15,5 @@
     <to>CAD</to>
     <conversion>0.9911</conversion>
   </rate>
-  <rate>
-    <from>AUD</from>
-    <to>USD</to>
-    <conversion>1.0170</conversion>
-  </rate>
 </rates>
 

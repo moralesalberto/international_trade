@@ -1,11 +1,10 @@
 class BankerRound
-  def self.round(number)
-    self.new(number).round
-  end
 
-  def initialize(number)
+
+  def initialize(number, precision=2)
     @number = number
-    @significance = 100 # 2 decimals, precision hardcoded for now
+    @significance = 10**precision
+    @precision = precision
   end
 
   def round
@@ -13,7 +12,7 @@ class BankerRound
   end
 
   def rounded_whole_portion
-    rounded_digits.to_i/@significance
+    rounded_digits.to_f/@significance
   end
 
   def rounded_decimal_portion
@@ -65,7 +64,7 @@ class BankerRound
   end
 
   def significant_digits
-    @significant_digits ||= (@number * @significance * 10).truncate # it was truncate not round
+    @significant_digits = (@number * 10**(@precision+1)).truncate # it was truncate not round
   end
 
 end
