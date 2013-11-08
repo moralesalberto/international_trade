@@ -29,14 +29,4 @@ class CurrencyConverterTest < Test::Unit::TestCase
   end
 end
 
-class CurrencyConverterTest::RateCalculatorTest < Test::Unit::TestCase
 
-
-  test "must find all the rates from source currency to desired currency" do
-    rates = [{'from' => 'CAD', 'to' => 'GBP', 'conversion' => '0.9960'},
-             {'from' => 'AUD', 'to' => 'CAD', 'conversion' => '1.0090'},
-             {'from' => 'GBP', 'to' => 'USD', 'conversion' => '0.9230'},
-             {'from' => 'GBP', 'to' => 'SGD', 'conversion' => '0.8230'},
-             ]
-  end
-end

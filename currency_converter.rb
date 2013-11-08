@@ -33,18 +33,7 @@ class CurrencyConverter
   end
   
   def calculate_rate(params)
-    RateCalculator.new(params, rates).calculate
-  end
-
-  class RateCalculator
-    def initialize(params, existing_rates)
-      @params = params
-    end
-    
-    def calculate
-      raise "Not implemented yet; still thinking about it"
-    end
-    
+    raise "Work in progress will call RateCalculator.rate() eventually"
   end
 
   def convert(params={:from => 'CAD', :to => 'USD', :amount => 100.02})
